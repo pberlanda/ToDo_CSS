@@ -1,0 +1,51 @@
+<div class="container">
+<h1>Promemoria</h1>
+
+<label for="addItemInput">Che facciamo oggi?</label>
+<br>
+<hr>
+
+<input
+  #newItem
+  placeholder="Aggiungi un elemento"
+  (keyup.enter)="addItem(newItem.value); newItem.value = ''"
+  class="lg-text-input"
+  id="addItemInput"
+/>
+<div class="btn-actions">
+  <button class="btn-primary" (click)="addItem(newItem.value)">Aggiungi</button>
+  <button class="btn-primary" (click)="removeAll()">Elimina tutti</button>
+</div>
+
+<div class="btn-wrapper">
+  <button
+    class="btn btn-menu"
+    [class.active]="filter == 'all'"
+    (click)="filter = 'all'">
+    Tutti
+  </button>
+
+  <button
+    class="btn btn-menu"
+    [class.active]="filter == 'active'"
+    (click)="filter = 'active'">
+    Da fare
+  </button>
+
+  <button
+    class="btn btn-menu"
+    [class.active]="filter == 'done'"
+    (click)="filter = 'done'">
+    Fatti
+  </button>
+</div>
+
+<h2>{{items.length}} <span *ngIf="items.length === 1; else elseBlock">Elemento</span>
+  <ng-template #elseBlock>Elementi</ng-template></h2>
+
+<ul>
+  <li *ngFor="let item of items">
+    <app-item (remove)="remove(item)" [item]="item"></app-item>
+  </li>
+</ul>
+</div>
